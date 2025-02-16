@@ -52,5 +52,3 @@ The script will fetch the lottery results for IDs ranging from 1 to 1315 and sto
 ## License
 
 This project is licensed under the MIT License.
-
-phamvietdung: @GitHubCopilot 
