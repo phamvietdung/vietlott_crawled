@@ -12,18 +12,17 @@ readme.md
 result.csv
 run_single.sh
 env_vars.sh
+requirements.txt
 ```
 
 ## Requirements
 
 - Python 3.x
-- `beautifulsoup4` library
-- `cloudscraper` library
 
-You can install the required libraries using pip:
+You can install the required libraries using pip and the `requirements.txt` file:
 
 ```sh
-pip install beautifulsoup4 cloudscraper
+pip install -r requirements.txt
 ```
 
 ## Usage
