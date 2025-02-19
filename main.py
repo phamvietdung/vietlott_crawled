@@ -1,4 +1,5 @@
 import os
+import argparse
 from bs4 import BeautifulSoup
 data_folder = "data"
 
@@ -65,5 +66,29 @@ def crawl_vietlott(id : int):
 
         append_line_to_file("result.csv", line + "\n")
 
-for i in range(1, 1316):
-    crawl_vietlott(i)
+def main_range(start_id, end_id):
+    for i in range(start_id, end_id + 1):
+        crawl_vietlott(i)
+
+def main_single(id):
+    crawl_vietlott(id)
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Crawl Vietlott data")
+    subparsers = parser.add_subparsers(dest="command")
+
+    range_parser = subparsers.add_parser("range", help="Crawl a range of IDs")
+    range_parser.add_argument("--start_id", type=int, required=True, help="Starting ID for crawling")
+    range_parser.add_argument("--end_id", type=int, required=True, help="Ending ID for crawling")
+
+    single_parser = subparsers.add_parser("single", help="Crawl a single ID")
+    single_parser.add_argument("--id", type=int, required=True, help="ID for crawling")
+
+    args = parser.parse_args()
+
+    if args.command == "range":
+        main_range(args.start_id, args.end_id)
+    elif args.command == "single":
+        main_single(args.id)
+    else:
+        parser.print_help()
