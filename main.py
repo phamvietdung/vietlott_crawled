@@ -48,7 +48,10 @@ def append_line_to_file(filename, data):
     if isExist == False:
         with open(f"{os.path.curdir}/{filename}", "a", encoding="utf-8") as f:
             f.write(data)
-    
+
+def remove_file(filename):
+    if(os.path.exists(get_path(filename))):
+        os.remove(get_path(filename))
 
 def crawl_vietlott(id : int):
 
@@ -68,6 +71,12 @@ def crawl_vietlott(id : int):
         raise Exception("Failed to crawl")
     else:
         numbers = soup.find_all("span", class_="bong_tron")
+
+        if(len(numbers) == 0):
+            print(f"ID {id} not found")
+            if(os.path.exists(get_path(html_file))):
+                remove_file(html_file)
+            return
 
         line = f"{id},"
 
