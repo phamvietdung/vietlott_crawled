@@ -1,7 +1,4 @@
-
-
 # Vietlott Crawler
-
 
 This project is a web crawler for Vietlott lottery results. It fetches the lottery results from the Vietlott website and stores them in a CSV file.
 
@@ -13,8 +10,8 @@ data/
 main.py
 readme.md
 result.csv
-suggested/
-    # Additional suggested files or scripts
+run_single.sh
+env_vars.sh
 ```
 
 ## Requirements
@@ -31,13 +28,35 @@ pip install beautifulsoup4 cloudscraper
 
 ## Usage
 
-To run the crawler, execute the main.py script:
+To run the crawler, execute the `main.py` script with the desired parameters:
 
+For a range of IDs:
 ```sh
-python main.py
+python main.py range --start_id 1 --end_id 1315
 ```
 
-The script will fetch the lottery results for IDs ranging from 1 to 1315 and store the results in result.csv.
+For a single ID:
+```sh
+python main.py single --id 1
+```
+
+## Running with Cron Job
+
+To run the crawler automatically every Wednesday, Friday, and Sunday at 7 PM, you can set up a cron job.
+
+1. Create a shell script `run_single.sh` to run the `main.py` script with the `single` command.
+2. Make the shell script executable:
+    ```sh
+    chmod +x /f:/WorkSpace/vietlott/run_single.sh
+    ```
+3. Edit the crontab file to add the cron job:
+    ```sh
+    crontab -e
+    ```
+4. Add the following line to the crontab file to schedule the job for every Wednesday, Friday, and Sunday at 7 PM:
+    ```sh
+    0 19 * * 3,5,7 /f:/WorkSpace/vietlott/run_single.sh
+    ```
 
 ## Functions
 
