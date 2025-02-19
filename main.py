@@ -34,8 +34,20 @@ def read_from_file(filename):
         return f.read()
     
 def append_line_to_file(filename, data):
-    with open(f"{os.path.curdir}/{filename}", "a", encoding="utf-8") as f:
-        f.write(data)
+
+    isExist : bool = False
+
+    # check if data line is existed in file
+    if(os.path.exists(f"{os.path.curdir}/{filename}")):
+        with open(f"{os.path.curdir}/{filename}", "r", encoding="utf-8") as f:
+            if data in f.read():
+                isExist = True
+
+    # print(f"Data is existed: {isExist}")
+
+    if isExist == False:
+        with open(f"{os.path.curdir}/{filename}", "a", encoding="utf-8") as f:
+            f.write(data)
     
 
 def crawl_vietlott(id : int):
