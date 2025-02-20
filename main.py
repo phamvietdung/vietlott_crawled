@@ -73,10 +73,10 @@ def crawl_vietlott(id : int):
         numbers = soup.find_all("span", class_="bong_tron")
 
         if(len(numbers) == 0):
-            print(f"ID {id} not found")
             if(os.path.exists(get_path(html_file))):
                 remove_file(html_file)
-            return
+            raise Exception("No data found")
+            #return
 
         line = f"{id},"
 
@@ -105,11 +105,23 @@ if __name__ == "__main__":
     single_parser = subparsers.add_parser("single", help="Crawl a single ID")
     single_parser.add_argument("--id", type=int, required=True, help="ID for crawling")
 
+
+    all_parser = subparsers.add_parser("all", help="Crawl all IDs, until no more data")
+
     args = parser.parse_args()
 
     if args.command == "range":
         main_range(args.start_id, args.end_id)
     elif args.command == "single":
         main_single(args.id)
+    elif args.command == "all":
+        id = 1
+        while True:
+            try:
+                crawl_vietlott(id)
+                id += 1
+            except Exception as e:
+                print("No more data to crawl")
+                break
     else:
         parser.print_help()
